@@ -1,13 +1,13 @@
 # Authors
 
-Name Name:
-  name        : "Name Name"
-  uri         : "http://name.com"
-  email       : "name@name.com"
-  bio         : "This is the first name."
-  avatar      : "bio-photo-2.jpg"
-  twitter     : "name"
-  google_plus : "Name"
+Simone D'Ambrogio:
+  name        : "Simone D'Ambrogio"
+  uri         : "https://simonedambrogio.github.io/"
+  email       : "simone.dambrogio@psy.ox.ac.uk"
+  bio         : "I am a cognitive neuroscientist interested in the neural mechanisms of learning and memory. I am currently a postdoctoral researcher at the University of Oxford, working on the role of the prefrontal cortex in memory consolidation."
+  avatar      : "bio-simone.jpg"
+  twitter     : "simonedambrogio"
+  google_plus : "simonedambrogio"
 
 Name2 Name2:
   name        : "Name2 Name2"

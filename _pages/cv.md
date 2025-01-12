@@ -9,56 +9,30 @@ redirect_from:
 
 {% include base_path %}
 
-Education
-======
-* Ph.D in Version Control Theory, GitHub University, 2018 (expected)
-* M.S. in Jekyll, GitHub University, 2014
-* B.S. in GitHub, GitHub University, 2012
+# Education and Employment
 
-Work experience
-======
-* Spring 2024: Academic Pages Collaborator
-  * Github University
-  * Duties includes: Updates and improvements to template
-  * Supervisor: The Users
+## Google DeepMind &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; *London & San Francisco*
+Senior Research Scientist, Foundational Research Unit. Algorithms of the Mind (Colead) &  
+LLM Investigations (Individual Contributor). &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; 2021 - Today
 
-* Fall 2015: Research Assistant
-  * Github University
-  * Duties included: Merging pull requests
-  * Supervisor: Professor Hub
+## University College London &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; *London, UK*
+Honorary Lecturer, Department of Experimental Psychology. &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; 2024 - Today
 
-* Summer 2015: Research Assistant
-  * Github University
-  * Duties included: Tagging issues
-  * Supervisor: Professor Git
-  
-Skills
-======
-* Skill 1
-* Skill 2
-  * Sub-skill 2.1
-  * Sub-skill 2.2
-  * Sub-skill 2.3
-* Skill 3
+## University of California, Berkeley &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; *Berkeley, USA*
+PhD, Psychology. Advisors: Profs. Anne Collins and Silvia Bunge. Cognition, Brain &  
+Behavior. Dissertation: Computational Models of Learning and Hierarchy. &emsp;&emsp;&emsp; 2015 - 2021
 
-Publications
-======
-  <ul>{% for post in site.publications reversed %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
-  
-Talks
-======
-  <ul>{% for post in site.talks reversed %}
-    {% include archive-single-talk-cv.html  %}
-  {% endfor %}</ul>
-  
-Teaching
-======
-  <ul>{% for post in site.teaching reversed %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
-  
-Service and leadership
-======
-* Currently signed in to 43 different slack teams
+## Graduate School of Systemic Neurosciences &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; *Munich, Germany*
+PhD, Neuroscience (unfinished). Advisor: Klaus Wunderlich. Focus: Model-Based and  
+Model-Free Reinforcement Learning. &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; 2013 - 2015
+
+## Ludwig-Maximilians-Universität &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; *Munich, Germany*
+BA, Philosophy. Focus: Philosophy of Mind, Neurophilosophy, History of Science. Thesis:  
+Donald Davidson's Theory of Action: Description, Critique, and Alternatives. &emsp;&emsp;&emsp; 2011 - 2013
+
+## Ludwig-Maximilians-Universität &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; *Munich, Germany*
+BSc, Psychology. Focus: Clinical Neuropsychology, Developmental Psychology. Thesis:  
+Empirical Evaluation of the Zurich Model of Motivation. &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; 2010 - 2013
+
+## Albert-Ludwigs-Universität &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; *Freiburg, Germany*
+BA, Ancient Languages, Cognitive Science (unfinished). &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; 2009 - 2010

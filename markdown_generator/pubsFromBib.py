@@ -24,18 +24,13 @@ import html
 import os
 import re
 
+print(os.getcwd())
+print(os.path.isfile("markdown_generator/pubs.bib"))
+
 #todo: incorporate different collection types rather than a catch all publications, requires other changes to template
 publist = {
-    "proceeding": {
-        "file" : "proceedings.bib",
-        "venuekey": "booktitle",
-        "venue-pretext": "In the proceedings of ",
-        "collection" : {"name":"publications",
-                        "permalink":"/publication/"}
-        
-    },
     "journal":{
-        "file": "pubs.bib",
+        "file": "markdown_generator/pubs.bib",
         "venuekey" : "journal",
         "venue-pretext" : "",
         "collection" : {"name":"publications",
@@ -100,60 +95,83 @@ for pubsource in publist:
 
             #citation authors - todo - add highlighting for primary author?
             for author in bibdata.entries[bib_id].persons["author"]:
-                citation = citation+" "+author.first_names[0]+" "+author.last_names[0]+", "
+                try:
+                    # Handle cases where first_names or last_names might be empty
+                    first_name = author.first_names[0] if author.first_names else ""
+                    last_name = author.last_names[0] if author.last_names else ""
+                    if first_name or last_name:
+                        citation = citation + " " + first_name + " " + last_name + ","
+                except IndexError:
+                    # If we can't get the name, just continue to the next author
+                    continue
+            
+            # Remove trailing comma and add space
+            citation = citation.rstrip(",") + " "
 
             #citation title
             citation = citation + "\"" + html_escape(b["title"].replace("{", "").replace("}","").replace("\\","")) + ".\""
 
             #add venue logic depending on citation type
-            venue = publist[pubsource]["venue-pretext"]+b[publist[pubsource]["venuekey"]].replace("{", "").replace("}","").replace("\\","")
+            try:
+                venue = publist[pubsource]["venue-pretext"]
+                if publist[pubsource]["venuekey"] in b.keys():
+                    venue += b[publist[pubsource]["venuekey"]].replace("{", "").replace("}","").replace("\\","")
+                else:
+                    # If journal is not found, use publisher or default to "Preprint"
+                    venue += b.get("publisher", "Preprint").replace("{", "").replace("}","").replace("\\","")
+            except KeyError:
+                venue = b.get("publisher", "Preprint").replace("{", "").replace("}","").replace("\\","")
 
             citation = citation + " " + html_escape(venue)
             citation = citation + ", " + pub_year + "."
 
             
             ## YAML variables
-            md = "---\ntitle: \""   + html_escape(b["title"].replace("{", "").replace("}","").replace("\\","")) + '"\n'
+            md = "---\n"
+            md += f'title: "{html_escape(b["title"])}"\n'
+            md += "collection: publications\n"
             
-            md += """collection: """ +  publist[pubsource]["collection"]["name"]
-
-            md += """\npermalink: """ + publist[pubsource]["collection"]["permalink"]  + html_filename
+            # Create a simple slug from the title
+            simple_slug = b["title"].split()[0].lower()
+            md += f"permalink: /publication/{simple_slug}\n"
             
-            note = False
-            if "note" in b.keys():
-                if len(str(b["note"])) > 5:
-                    md += "\nexcerpt: '" + html_escape(b["note"]) + "'"
-                    note = True
-
-            md += "\ndate: " + str(pub_date) 
-
-            md += "\nvenue: '" + html_escape(venue) + "'"
+            # Add date
+            md += f"date: {pub_date}\n"
             
-            url = False
+            # Add venue
+            md += f'venue: "{html_escape(venue)}"\n'
+            
+            # Format authors with your name in bold
+            authors = ""
+            for author in bibdata.entries[bib_id].persons["author"]:
+                try:
+                    name = str(author)
+                    if "D'Ambrogio" in name:  # Highlight your name
+                        authors += f"<b>{name}</b>, "
+                    else:
+                        authors += f"{name}, "
+                except:
+                    continue
+            authors = authors.rstrip(", ")  # Remove trailing comma
+            md += f'authors: "{authors}"\n'
+            
+            # Add paper URL if exists
             if "url" in b.keys():
-                if len(str(b["url"])) > 5:
-                    md += "\npaperurl: '" + b["url"] + "'"
-                    url = True
-
-            md += "\ncitation: '" + html_escape(citation) + "'"
-
-            md += "\n---"
+                md += f'paperurl: "{b["url"]}"\n'
+            
+            md += "---\n"
 
             
-            ## Markdown description for individual page
-            if note:
-                md += "\n" + html_escape(b["note"]) + "\n"
-
-            if url:
-                md += "\n[Access paper here](" + b["url"] + "){:target=\"_blank\"}\n" 
-            else:
-                md += "\nUse [Google Scholar](https://scholar.google.com/scholar?q="+html.escape(clean_title.replace("-","+"))+"){:target=\"_blank\"} for full citation"
-
+            
             md_filename = os.path.basename(md_filename)
 
-            with open("../_publications/" + md_filename, 'w', encoding="utf-8") as f:
+            output_dir = "_publications"  # Remove the "../" 
+            
+            # Create the full path and write the file
+            output_path = os.path.join(output_dir, md_filename)
+            with open(output_path, 'w', encoding="utf-8") as f:
                 f.write(md)
-            print(f'SUCESSFULLY PARSED {bib_id}: \"', b["title"][:60],"..."*(len(b['title'])>60),"\"")
+            print(f'SUCCESSFULLY PARSED {bib_id}: \"', b["title"][:60],"..."*(len(b['title'])>60),"\"")
         # field may not exist for a reference
         except KeyError as e:
             print(f'WARNING Missing Expected Field {e} from entry {bib_id}: \"', b["title"][:30],"..."*(len(b['title'])>30),"\"")
