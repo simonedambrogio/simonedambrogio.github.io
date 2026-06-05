@@ -6,8 +6,10 @@
 
 # main links links
 main:
-  - title: "Publications"
-    url: /publications/
+  # Hidden until it can be curated down to selected publications
+  # (the full list is already in the CV)
+  # - title: "Publications"
+  #   url: /publications/
 
   # - title: "Talks"
   #   url: /talks/    
@@ -17,3 +19,6 @@ main:
     
   - title: "CV"
     url: /cv/
+
+  - title: "Chat"
+    url: /chat/

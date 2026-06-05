@@ -7,6 +7,8 @@ redirect_from:
   - /about.html
 ---
 
-I am a PhD student in Experimental Psychology at the University of Oxford, where I work with Professor Matthew Rushworth and Professor Laurence Hunt. 
+I am a computational neuroscientist. I completed my DPhil in Experimental Psychology at the University of Oxford, advised by Prof. Matthew Rushworth and Prof. Laurence Hunt.
 
-I am interested in understanding how the brain learns models of the world and uses them to guide flexible, adaptive behavior. My research involves studying humans and non-human primates as they make decisions in carefully designed laboratory tasks, while measuring their brain activity using high-resolution brain imaging. It also involves building RL models that perform the same tasks to better understand how the brain processes information and guides behavior. I am particularly interested in new approaches that combine modern machine learning with standard models in cognitive science to make new discoveries about the algorithms that the brain uses to process information and make decisions.
+I work at the intersection of mechanistic interpretability and cognition. I am interested in how biological and artificial systems learn internal models of the world and use them to guide flexible, adaptive behavior. My work combines computational neuroscience, reinforcement learning, and neural network modeling to understand learning, decision-making, and generalization.
+
+This work often involves training neural networks on the same tasks that humans and other animals perform, and making their internal computations interpretable. Combining these models with behavioral and neural data, including ultra-high-field fMRI, makes it possible to identify the algorithms that the brain uses to learn efficiently and generalize across tasks.
