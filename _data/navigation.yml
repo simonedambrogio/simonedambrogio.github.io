@@ -20,5 +20,5 @@ main:
   - title: "CV"
     url: /cv/
 
-  - title: "Chat"
-    url: /chat/
+  # - title: "Chat"
+  #   url: /chat/

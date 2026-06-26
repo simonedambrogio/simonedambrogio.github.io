@@ -1,0 +1,538 @@
+<!-- Native HTML CV. Content source: CV/Academic/CV.tex (Awesome-CV). -->
+<style>
+  .cv-doc {
+    --cv-accent: #0395DE;
+    --cv-accent-dark: #0277aa;
+    --cv-title: #2b2b2b;
+    --cv-sub: #5d5d5d;
+    --cv-meta: #7d7d7d;
+    --cv-body: #444;
+    --cv-rule: #e0e0e0;
+    color: var(--cv-body);
+    line-height: 1.45;
+    padding-top: 1.75rem;
+    padding-left: 3rem;
+  }
+  @media (max-width: 600px) {
+    .cv-doc { padding-left: 0; }
+  }
+  .cv-doc a { color: var(--cv-accent); text-decoration: none; }
+  .cv-doc a:hover { text-decoration: underline; }
+
+  /* Top bar */
+  .cv-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+    flex-wrap: wrap;
+    margin-bottom: 0.5em;
+  }
+  .cv-topbar .cv-updated { color: var(--cv-meta); font-size: 0.8rem; }
+  .cv-actions { display: flex; align-items: center; gap: 0.6em; flex-wrap: wrap; }
+  .cv-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    padding: 0.5em 1em;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    line-height: 1;
+    border: 1px solid var(--cv-accent);
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .cv-btn svg { width: 1em; height: 1em; flex: none; }
+  .cv-btn:hover { text-decoration: none !important; }
+  .cv-btn-primary { background: var(--cv-accent); color: #fff !important; }
+  .cv-btn-primary:hover { background: var(--cv-accent-dark); border-color: var(--cv-accent-dark); }
+  .cv-btn-outline { background: transparent; color: var(--cv-accent) !important; }
+  .cv-btn-outline:hover { background: var(--cv-accent); color: #fff !important; }
+
+  /* Section headings */
+  .cv-section {
+    display: flex;
+    align-items: center;
+    gap: 0.7em;
+    margin: 1.7em 0 0.8em;
+  }
+  .cv-section h2 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--cv-title);
+    letter-spacing: 0.2px;
+    white-space: nowrap;
+  }
+  .cv-section::after {
+    content: "";
+    flex: 1 1 auto;
+    height: 1px;
+    background: var(--cv-rule);
+  }
+
+  /* Entries */
+  .cv-entry { margin-bottom: 0.85em; }
+  .cv-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1em;
+  }
+  .cv-title { font-weight: 700; color: var(--cv-title); }
+  .cv-loc { color: var(--cv-sub); font-style: italic; white-space: nowrap; }
+  .cv-sub {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1em;
+    margin-top: 1px;
+  }
+  .cv-org { color: var(--cv-sub); font-variant: small-caps; letter-spacing: 0.3px; }
+  .cv-desc { color: var(--cv-body); }
+  .cv-date { color: var(--cv-meta); font-style: italic; white-space: nowrap; }
+  .cv-items { margin: 0.35em 0 0; padding-left: 1.1em; }
+  .cv-items li { margin: 0.12em 0; }
+  .cv-amount { color: var(--cv-meta); }
+
+  .cv-interests { font-size: 0.95rem; color: var(--cv-body); margin: 0; }
+
+  /* Publications */
+  .cv-pubs { list-style: none; margin: 0; padding: 0; counter-reset: pub; }
+  .cv-pubs li {
+    position: relative;
+    padding-left: 1.9em;
+    margin-bottom: 0.7em;
+    font-size: 0.92rem;
+  }
+  .cv-pubs li::before {
+    counter-increment: pub;
+    content: counter(pub) ".";
+    position: absolute;
+    left: 0;
+    color: var(--cv-meta);
+  }
+  .cv-pubs .cv-pub-title { font-style: italic; }
+  .cv-pubs .cv-me { font-weight: 700; }
+  .cv-pubs .cv-status { color: var(--cv-meta); }
+  .cv-pubs .cv-note { color: var(--cv-meta); font-size: 0.85em; }
+
+  /* Skills table */
+  .cv-skills { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  .cv-skills th {
+    color: var(--cv-accent);
+    font-weight: 700;
+    text-align: center;
+    padding: 0 0.8em 0.4em;
+    width: 33.33%;
+    vertical-align: top;
+  }
+  .cv-skills td {
+    color: #7f7f7f;
+    text-align: center;
+    padding: 0 0.8em;
+    vertical-align: top;
+    border-left: 1px solid var(--cv-rule);
+  }
+  .cv-skills td:first-child { border-left: none; }
+
+  /* References */
+  .cv-refs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em 2em;
+    font-size: 0.9rem;
+  }
+  .cv-ref strong { color: var(--cv-title); }
+  .cv-ref div { color: var(--cv-sub); }
+
+  @media (max-width: 600px) {
+    .cv-row, .cv-sub { flex-direction: column; gap: 0; }
+    .cv-loc, .cv-date { white-space: normal; }
+    .cv-skills, .cv-skills tbody, .cv-skills tr, .cv-skills th, .cv-skills td { display: block; width: auto; }
+    .cv-skills td { border-left: none; margin-bottom: 0.8em; }
+    .cv-skills th { text-align: left; padding-left: 0; }
+    .cv-skills td { text-align: left; padding-left: 0; }
+    .cv-refs { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="cv-doc">
+
+  <div class="cv-topbar">
+    <span class="cv-updated">Updated March 2026</span>
+    <div class="cv-actions">
+      <a class="cv-btn cv-btn-primary" href="https://simonedambrogio--cv-refusal-demo-front.modal.run/" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        Chat with my CV
+      </a>
+      <a class="cv-btn cv-btn-outline" href="/files/CV.pdf">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download PDF
+      </a>
+    </div>
+  </div>
+
+  <!-- CURRENT POSITION -->
+  <div class="cv-section"><h2>Current Position</h2></div>
+  <div class="cv-entry">
+    <div class="cv-row">
+      <span class="cv-title">Postdoctoral Researcher</span>
+      <span class="cv-loc">Oxford, UK</span>
+    </div>
+    <div class="cv-sub">
+      <span class="cv-org"><a href="https://www.psy.ox.ac.uk/research/decision-and-action-laboratory">Decision and Action Laboratory, University of Oxford</a></span>
+      <span class="cv-date">2026 &ndash; Present</span>
+    </div>
+  </div>
+
+  <!-- EDUCATION -->
+  <div class="cv-section"><h2>Education</h2></div>
+  <div class="cv-entry">
+    <div class="cv-row">
+      <span class="cv-title">University of Oxford</span>
+      <span class="cv-loc">Oxford, UK</span>
+    </div>
+    <div class="cv-sub">
+      <span class="cv-org">DPhil in Experimental Psychology</span>
+      <span class="cv-date">2021 &ndash; 2026</span>
+    </div>
+    <ul class="cv-items">
+      <li>Dissertation: <em>Learning Efficiently in Uncertain and Structured Worlds</em></li>
+      <li>Advisors: Prof. <a href="https://www.psy.ox.ac.uk/people/matthew-rushworth">Matthew F. S. Rushworth</a>, Prof. <a href="https://www.psy.ox.ac.uk/people/laurence-hunt">Laurence T. Hunt</a></li>
+      <li>Examiners: Prof. <a href="https://www.psy.ox.ac.uk/people/thomas-akam">Thomas Akam</a>, Prof. <a href="https://psychology.princeton.edu/people/nathaniel-daw">Nathaniel D. Daw</a></li>
+    </ul>
+  </div>
+  <div class="cv-entry">
+    <div class="cv-row">
+      <span class="cv-title">University of Pennsylvania</span>
+      <span class="cv-loc">Philadelphia, PA</span>
+    </div>
+    <div class="cv-sub">
+      <span class="cv-org">Visiting Graduate Scholar, Wharton Neuroscience Initiative</span>
+      <span class="cv-date">2020</span>
+    </div>
+  </div>
+  <div class="cv-entry">
+    <div class="cv-row">
+      <span class="cv-title">University of Padua</span>
+      <span class="cv-loc">Padua, Italy</span>
+    </div>
+    <div class="cv-sub">
+      <span class="cv-org">M.Sc. in Applied Cognitive Psychology (Cum Laude)</span>
+      <span class="cv-date">2018 &ndash; 2020</span>
+    </div>
+  </div>
+  <div class="cv-entry">
+    <div class="cv-row">
+      <span class="cv-title">Leiden University</span>
+      <span class="cv-loc">Leiden, Netherlands</span>
+    </div>
+    <div class="cv-sub">
+      <span class="cv-org">Erasmus+ Programme</span>
+      <span class="cv-date">2018</span>
+    </div>
+  </div>
+  <div class="cv-entry">
+    <div class="cv-row">
+      <span class="cv-title">University of Padua</span>
+      <span class="cv-loc">Padua, Italy</span>
+    </div>
+    <div class="cv-sub">
+      <span class="cv-org">B.Sc. in Psychology (First Class Honours)</span>
+      <span class="cv-date">2014 &ndash; 2017</span>
+    </div>
+  </div>
+
+  <!-- RESEARCH INTERESTS -->
+  <div class="cv-section"><h2>Research Interests</h2></div>
+  <p class="cv-interests">Decision-making &nbsp;&middot;&nbsp; Computational modeling of cognition &nbsp;&middot;&nbsp; Mechanistic Interpretability &nbsp;&middot;&nbsp; Bayesian Inference &nbsp;&middot;&nbsp; Generalization and Abstraction &nbsp;&middot;&nbsp; Reinforcement learning</p>
+
+  <!-- PUBLICATIONS -->
+  <div class="cv-section"><h2>Publications</h2></div>
+  <ol class="cv-pubs">
+    <li>
+      <span class="cv-me">D'Ambrogio, S.</span>, Grohn, J., Khalighinejad, N., Mattar, M., Hunt, L., &amp; Rushworth, M. F. S. (2026).
+      <span class="cv-pub-title"><a href="https://www.nature.com/articles/s41593-026-02342-9">Interpretable abstractions of artificial neural networks predict behavior and neural activity during human information gathering.</a></span>
+      Nature Neuroscience. <span class="cv-status">(In press)</span>
+    </li>
+    <li>
+      <span class="cv-me">D'Ambrogio, S.</span>, Fei, Z., Platt, M., &amp; Feng, S. (2026).
+      <span class="cv-pub-title">From pixels to preferences: Visual salience shapes economic choices beyond gaze alone.</span>
+      Nature Communications. <span class="cv-status">(Under review)</span>
+    </li>
+    <li>
+      Miyamoto, K.*, <span class="cv-me">D'Ambrogio, S.*</span>, Harbison, C., Eichert, N., Schüffelgen, U., Emberton, A., Sallet, J., Mars, R. B., Khalighinejad, N., &amp; Rushworth, M. F. S. (2026).
+      <span class="cv-pub-title"><a href="https://doi.org/10.1038/s41562-026-02473-w">Brain activity, disruption and connectivity comparisons identify origins of human metacognition in other primates.</a></span>
+      Nature Human Behaviour, 1&ndash;22. <span class="cv-note">(* Equal contribution)</span>
+    </li>
+    <li>
+      Priolo, G.*, Stablum, F.*, Vacondio, M.*, <span class="cv-me">D'Ambrogio, S.</span>, Caserotti, M., et al. (2026).
+      <span class="cv-pub-title"><a href="https://github.com/simonedambrogio/GlobalMentalAccounting">The robustness of mental accounting across 21 countries.</a></span>
+      Journal of Consumer Research. <span class="cv-status">(In press)</span> <span class="cv-note">(* Equal contribution)</span>
+    </li>
+    <li>
+      Pan, D., <span class="cv-me">D'Ambrogio, S.</span>, Kingston, N., Rascu, M., Sankhe, P., Luo, S., Klein-Flügge, M. C., Mahmoodi, A., &amp; Rushworth, M. F. S. (2025).
+      <span class="cv-pub-title"><a href="https://www.biorxiv.org/content/10.1101/2025.08.19.664920v1">Construction and disruption of cognitive graphs in the human hippocampus.</a></span>
+      Nature Human Behaviour. <span class="cv-status">(Under review)</span>
+    </li>
+    <li>
+      <span class="cv-me">D'Ambrogio, S.</span>, Werksman, N., Platt, M. L., &amp; Johnson, E. N. (2023).
+      <span class="cv-pub-title"><a href="https://doi.org/10.1002/mar.21772">How celebrity status and gaze direction in ads drive visual attention to shape consumer decisions.</a></span>
+      Psychology &amp; Marketing, 40(4), 723&ndash;734.
+    </li>
+    <li>
+      Ruggeri, K., Panin, A., &hellip; <span class="cv-me">D'Ambrogio, S.</span>, &hellip; Zupan, Z., &amp; García-Garzon, E. (2022).
+      <span class="cv-pub-title"><a href="https://doi.org/10.1038/s41562-022-01392-w">The globalizability of temporal discounting.</a></span>
+      Nature Human Behaviour, 6(10), 1386&ndash;1397.
+    </li>
+  </ol>
+
+  <!-- RESEARCH EXPERIENCE -->
+  <div class="cv-section"><h2>Research Experience</h2></div>
+  <div class="cv-entry">
+    <div class="cv-row">
+      <span class="cv-title"><a href="https://www.psy.ox.ac.uk/research/decision-and-action-laboratory">Decision and Action Laboratory, University of Oxford</a></span>
+      <span class="cv-loc">Oxford, UK</span>
+    </div>
+    <div class="cv-sub">
+      <span class="cv-desc">Computational modeling, 7T fMRI, and non-invasive brain stimulation (TUS) to study information sampling, metacognition, and generalization in humans and macaques.</span>
+      <span class="cv-date">2021 &ndash; 2026</span>
+    </div>
+  </div>
+  <div class="cv-entry">
+    <div class="cv-row">
+      <span class="cv-title"><a href="https://plattlabs.rocks/">Platt Lab, Wharton Neuroscience Initiative, University of Pennsylvania</a></span>
+      <span class="cv-loc">Philadelphia, PA</span>
+    </div>
+    <div class="cv-sub">
+      <span class="cv-desc">Eye-tracking, pupillometry, and drift-diffusion modeling of attention in consumer decision-making.</span>
+      <span class="cv-date">2020</span>
+    </div>
+  </div>
+  <div class="cv-entry">
+    <div class="cv-row">
+      <span class="cv-title"><a href="https://jrp.pscholars.org/">Junior Researcher Programme</a></span>
+      <span class="cv-loc">Cambridge, UK</span>
+    </div>
+    <div class="cv-sub">
+      <span class="cv-desc">Computational modeling of decision-making and intertemporal choice.</span>
+      <span class="cv-date">2020</span>
+    </div>
+  </div>
+  <div class="cv-entry">
+    <div class="cv-row">
+      <span class="cv-title"><a href="https://jdmlabpd.dpss.psy.unipd.it/jdmlab/en/">Judgment and Decision-Making Lab, University of Padua</a></span>
+      <span class="cv-loc">Padua, Italy</span>
+    </div>
+    <div class="cv-sub">
+      <span class="cv-desc">Behavioral experiments and modeling of judgment and decision-making for individual and societal well-being.</span>
+      <span class="cv-date">2018 &ndash; 2020</span>
+    </div>
+  </div>
+  <div class="cv-entry">
+    <div class="cv-row">
+      <span class="cv-title"><a href="https://psicostat.dpss.psy.unipd.it/">Psicostat Lab, University of Padua</a></span>
+      <span class="cv-loc">Padua, Italy</span>
+    </div>
+    <div class="cv-sub">
+      <span class="cv-desc">Development of statistical methods for behavioral science.</span>
+      <span class="cv-date">2017 &ndash; 2020</span>
+    </div>
+  </div>
+
+  <!-- AWARDS & HONOURS -->
+  <div class="cv-section"><h2>Awards &amp; Honours</h2></div>
+  <div class="cv-entry">
+    <div class="cv-row">
+      <span class="cv-title">Excellence Award</span>
+      <span class="cv-loc">UK</span>
+    </div>
+    <div class="cv-sub">
+      <span class="cv-desc">For research contributions beyond expected grade level. Funded by the University of Oxford &nbsp;&middot;&nbsp; <span class="cv-amount">£1,044</span></span>
+      <span class="cv-date">2025</span>
+    </div>
+  </div>
+  <div class="cv-entry">
+    <div class="cv-row">
+      <span class="cv-title">PhD Scholarship in Psychological Sciences</span>
+      <span class="cv-loc">Italy</span>
+    </div>
+    <div class="cv-sub">
+      <span class="cv-desc">Funded by the University of Padua &nbsp;&middot;&nbsp; <span class="cv-amount">€45,343</span></span>
+      <span class="cv-date">2020</span>
+    </div>
+  </div>
+  <div class="cv-entry">
+    <div class="cv-row">
+      <span class="cv-title">Erasmus+ Scholarship, School of Psychology</span>
+      <span class="cv-loc">Italy</span>
+    </div>
+    <div class="cv-sub">
+      <span class="cv-desc">Funded by the University of Padua &nbsp;&middot;&nbsp; <span class="cv-amount">€2,800</span></span>
+      <span class="cv-date">2018</span>
+    </div>
+  </div>
+
+  <!-- TALKS & CONFERENCE PRESENTATIONS -->
+  <div class="cv-section"><h2>Talks &amp; Conference Presentations</h2></div>
+  <div class="cv-entry">
+    <div class="cv-row">
+      <span class="cv-title">Mathematics Of Neuroscience and AI <a href="https://www.youtube.com/watch?v=6LEm0jDcuxI&amp;list=PLA59nMLAkDyiyYoISlQDDnMY4pxKmTsBC&amp;index=51">(▶ Talk)</a></span>
+      <span class="cv-loc">Rome, Italy</span>
+    </div>
+    <div class="cv-sub">
+      <span class="cv-desc">Hybrid artificial neural network modelling predicts behaviour and neural activity in a solution for Buridan's ass.</span>
+      <span class="cv-date">2024</span>
+    </div>
+  </div>
+  <div class="cv-entry">
+    <div class="cv-row">
+      <span class="cv-title">Foraging and Information Seeking Conference <a href="https://github.com/simonedambrogio/CV/blob/main/files/post.pdf">(Poster)</a></span>
+      <span class="cv-loc">Lyon, France</span>
+    </div>
+    <div class="cv-sub">
+      <span class="cv-desc">Discovery of Cognitive Strategies for Information Sampling with Deep Cognitive Modelling and Investigation of their Neural Basis.</span>
+      <span class="cv-date">2024</span>
+    </div>
+  </div>
+  <div class="cv-entry">
+    <div class="cv-row">
+      <span class="cv-title">Interdisciplinary Symposium on Decision Neuroscience (Poster)</span>
+      <span class="cv-loc">Online</span>
+    </div>
+    <div class="cv-sub">
+      <span class="cv-desc">Visuospatial working memory modulates the influence of visual attention on binary choice.</span>
+      <span class="cv-date">2021</span>
+    </div>
+  </div>
+  <div class="cv-entry">
+    <div class="cv-row">
+      <span class="cv-title">Wharton Neuroscience Initiative Annual Meeting (Talk)</span>
+      <span class="cv-loc">Online</span>
+    </div>
+    <div class="cv-sub">
+      <span class="cv-desc">The effect of celebrity and visual attention on value-based decisions.</span>
+      <span class="cv-date">2021</span>
+    </div>
+  </div>
+  <div class="cv-entry">
+    <div class="cv-row">
+      <span class="cv-title">Society for Neuroeconomics (Poster)</span>
+      <span class="cv-loc">Online</span>
+    </div>
+    <div class="cv-sub">
+      <span class="cv-desc">The Effect of Celebrity and Visual Attention on Value-Based Decisions.</span>
+      <span class="cv-date">2020</span>
+    </div>
+  </div>
+  <div class="cv-entry">
+    <div class="cv-row">
+      <span class="cv-title">Italian Ministry of Economic Development &ndash; Division V (Talk)</span>
+      <span class="cv-loc">Online</span>
+    </div>
+    <div class="cv-sub">
+      <span class="cv-desc">Lessons from Decision Neuroscience to Inform Policy Making.</span>
+      <span class="cv-date">2019</span>
+    </div>
+  </div>
+  <div class="cv-entry">
+    <div class="cv-row">
+      <span class="cv-title">Junior Researcher Programme Conference (Poster)</span>
+      <span class="cv-loc">Siena, Italy</span>
+    </div>
+    <div class="cv-sub">
+      <span class="cv-desc">The Attentional Drift Diffusion Model with Temporal Information.</span>
+      <span class="cv-date">2019</span>
+    </div>
+  </div>
+  <div class="cv-entry">
+    <div class="cv-row">
+      <span class="cv-title">Psicostat Meeting <a href="https://simone-dambrogio.shinyapps.io/presentation/">(Talk)</a></span>
+      <span class="cv-loc">Padua, Italy</span>
+    </div>
+    <div class="cv-sub">
+      <span class="cv-desc">Estimation of the attentional drift diffusion model parameters via Random Utility.</span>
+      <span class="cv-date">2019</span>
+    </div>
+  </div>
+
+  <!-- TEACHING -->
+  <div class="cv-section"><h2>Teaching</h2></div>
+  <div class="cv-entry">
+    <div class="cv-row">
+      <span class="cv-title">Neuroanatomy, University of Oxford</span>
+      <span class="cv-loc">Oxford, UK</span>
+    </div>
+    <div class="cv-sub">
+      <span class="cv-desc">Undergraduate tutorial teaching for Prof. Matthew F. S. Rushworth.</span>
+      <span class="cv-date">2022</span>
+    </div>
+  </div>
+
+  <!-- SUMMER SCHOOLS -->
+  <div class="cv-section"><h2>Summer Schools</h2></div>
+  <div class="cv-entry">
+    <div class="cv-row">
+      <span class="cv-title"><a href="https://compneuro.neuromatch.io/tutorials/intro.html">Computational Neuroscience, Neuromatch Academy</a></span>
+      <span class="cv-loc">Online</span>
+    </div>
+    <div class="cv-sub">
+      <span class="cv-desc">Project on fMRI decoding analysis supervised by Prof. Samuel J. Gershman.</span>
+      <span class="cv-date">2021</span>
+    </div>
+  </div>
+  <div class="cv-entry">
+    <div class="cv-row">
+      <span class="cv-title"><a href="https://jrp.pscholars.org/events/">Psychology and Behavioral Sciences, JSchool</a></span>
+      <span class="cv-loc">Siena, Italy</span>
+    </div>
+    <div class="cv-sub">
+      <span class="cv-desc">Studying how to improve real-world decision making.</span>
+      <span class="cv-date">2020</span>
+    </div>
+  </div>
+
+  <!-- TECHNICAL SKILLS & METHODS -->
+  <div class="cv-section"><h2>Technical Skills &amp; Methods</h2></div>
+  <table class="cv-skills">
+    <thead>
+      <tr>
+        <th>Computational Modeling</th>
+        <th>Neuroscience Methods</th>
+        <th>Programming &amp; Infrastructure</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Artificial neural networks &middot; Symbolic regression &middot; Reinforcement learning &middot; Cognitive modelling &middot; Bayesian statistics</td>
+        <td>Ultra-high field fMRI (7T) &middot; Transcranial ultrasound stimulation (TUS) &middot; Eye-tracking &middot; Pupillometry &middot; RSA &middot; FSL</td>
+        <td>Python &middot; Julia &middot; R &middot; JavaScript &middot; HPC / SLURM &middot; Git &middot; LaTeX &middot; Quarto</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- REFERENCES -->
+  <div class="cv-section"><h2>References</h2></div>
+  <div class="cv-refs">
+    <div class="cv-ref">
+      <strong>Prof. Matthew F. S. Rushworth</strong>
+      <div>Department of Experimental Psychology</div>
+      <div>University of Oxford</div>
+      <div><a href="mailto:matthew.rushworth@psy.ox.ac.uk">matthew.rushworth@psy.ox.ac.uk</a></div>
+    </div>
+    <div class="cv-ref">
+      <strong>Prof. Laurence T. Hunt</strong>
+      <div>Department of Experimental Psychology</div>
+      <div>University of Oxford</div>
+      <div><a href="mailto:laurence.hunt@psych.ox.ac.uk">laurence.hunt@psych.ox.ac.uk</a></div>
+    </div>
+    <div class="cv-ref">
+      <strong>Prof. Michael L. Platt</strong>
+      <div>Department of Neuroscience</div>
+      <div>University of Pennsylvania</div>
+      <div><a href="mailto:mplatt@pennmedicine.upenn.edu">mplatt@pennmedicine.upenn.edu</a></div>
+    </div>
+  </div>
+
+</div>
